@@ -1,6 +1,6 @@
 {
   "name": "@kaokei/iframe-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "iframe manager for micro-frontend",
   "scripts": {
     "tsc": "tsc -p tsconfig.app.json",
