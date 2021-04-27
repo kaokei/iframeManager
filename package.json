@@ -1,7 +1,7 @@
 {
   "name": "@kaokei/iframe-manager",
   "version": "1.0.0",
-  "description": "jsbridge for iframes or windows by window.postMessage",
+  "description": "iframe manager for micro-frontend",
   "scripts": {
     "tsc": "tsc -p tsconfig.app.json",
     "tsc:w": "tsc -p tsconfig.app.json -w",
