@@ -137,6 +137,12 @@ class IframeItem {
 }
 
 export class IframeManager {
+  public static preload(selector: string, arr: Array<RouteMetaType>) {
+    let im: IframeManager | undefined = new IframeManager(selector);
+    im.preload(arr);
+    im = undefined;
+  }
+
   public container: HTMLElement;
   public pool: PoolType;
 
