@@ -4,6 +4,7 @@ interface RouteMetaType {
   appName: string;
   path?: string;
   publicPath?: string;
+  disableIframeResizer?: boolean;
   [key: string]: SafeAny;
 }
 
@@ -97,7 +98,9 @@ class IframeItem {
       ...this.routeMeta,
       origin: this.origin,
     });
-    iframeResizer({ log: false, checkOrigin: false }, this.iframe); // 同步iframe的高度自适应内容高度
+    if (!this.routeMeta.disableIframeResizer) {
+      iframeResizer({ log: false, checkOrigin: false }, this.iframe); // 同步iframe的高度自适应内容高度
+    }
   }
 
   setStatusLoading() {
