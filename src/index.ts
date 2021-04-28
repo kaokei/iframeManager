@@ -26,6 +26,7 @@ class IframeItem {
   public postBridge?: PostBridge;
   public iframe: HTMLIFrameElement;
   public origin: string;
+  public loadingSyncRouteMeta?: RouteMetaType;
 
   constructor(routeMeta: RouteMetaType, container: HTMLElement) {
     this.onload = this.onload.bind(this);
@@ -39,6 +40,8 @@ class IframeItem {
 
     this.iframe = this.createIframe(); // 创建一个空壳iframe
     this.origin = this.createOrigin(); // 控制通信的origin
+
+    this.loadingSyncRouteMeta = undefined; // 在loading期间发生的sync
   }
 
   // 创建一个空壳的iframe，但是暂时不添加到dom中
@@ -80,6 +83,9 @@ class IframeItem {
       // 第二次以后sync，则需要通过postBridge来调用iframe内部的replaceState方法来同步路由
       console.log('status1 :>> ');
       this.postBridge && this.postBridge.call('replaceState', routeMeta);
+    } else if (this.status === 'loading') {
+      // 保存loading期间发生的sync，并且只保存最后一次
+      this.loadingSyncRouteMeta = routeMeta;
     } else {
       // 第一次sync，则是直接赋值给iframe就行了ƒ
       console.log('status2 :>> ');
@@ -100,6 +106,10 @@ class IframeItem {
     });
     if (!this.routeMeta.disableIframeResizer) {
       iframeResizer({ log: false, checkOrigin: false }, this.iframe); // 同步iframe的高度自适应内容高度
+    }
+    if (this.loadingSyncRouteMeta) {
+      this.sync(this.loadingSyncRouteMeta);
+      this.loadingSyncRouteMeta = undefined;
     }
   }
 
@@ -196,6 +206,18 @@ export class IframeManager {
     const { appName } = routeMeta;
     if (this.pool[appName]) {
       this.pool[appName].removeIframe();
+    }
+  }
+
+  preload(arr: Array<RouteMetaType>) {
+    for (let i = 0; i < arr.length; i++) {
+      const meta = arr[i];
+      const currentIframeItem = this.getIframeItem(meta);
+      if (currentIframeItem.status === 'created') {
+        currentIframeItem.sync(meta);
+        currentIframeItem.appendIframe();
+        currentIframeItem.iframe.style.display = 'none';
+      }
     }
   }
 }
