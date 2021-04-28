@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/kaokei/iframeManager/compare/v1.0.4...v1.0.5) (2021-04-28)
+
 ### [1.0.4](https://github.com/kaokei/iframeManager/compare/v1.0.3...v1.0.4) (2021-04-28)
 
 修改 preload 接口，从实例方法修改为静态方法
