@@ -103,6 +103,7 @@ class IframeItem {
     this.postBridge = new PostBridge(this.iframe.contentWindow as Window, {
       ...this.routeMeta,
       origin: this.origin,
+      iframeItem: this,
     });
     if (!this.routeMeta.disableIframeResizer) {
       iframeResizer({ log: false, checkOrigin: false }, this.iframe); // 同步iframe的高度自适应内容高度
