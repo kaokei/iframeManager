@@ -1,41 +1,25 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "noFallthroughCasesInSwitch": true,
-    "useDefineForClassFields": true,
-    "pretty": true,
+    "baseUrl": ".",
     "outDir": "dist",
+    "sourceMap": false,
     "target": "esnext",
-    "types": ["node", "jest"],
-    "lib": ["dom", "dom.iterable", "esnext", "scripthost"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "allowJs": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
+    "esModuleInterop": true,
+    "removeComments": false,
     "jsx": "preserve",
-    "baseUrl": ".",
+    "lib": ["esnext", "dom"],
+    "types": ["jest", "node"],
+    "rootDir": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "test"],
-  "exclude": [
-    "node_modules",
-    "asset",
-    "assets",
-    "public",
-    "app/public",
-    "app/views",
-    "dist",
-    "lib"
-  ]
+  "include": ["src", "typings", "__tests__"]
 }
