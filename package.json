@@ -1,6 +1,6 @@
 {
   "name": "@kaokei/iframe-manager",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "iframe manager for micro-frontend",
   "main": "./dist/index.cjs.runtime.min.js",
   "module": "./dist/index.esm.runtime.min.js",
