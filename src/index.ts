@@ -1,11 +1,9 @@
-type SafeAny = any;
-
 interface RouteMetaType {
   appName: string;
   path?: string;
   publicPath?: string;
   disableIframeResizer?: boolean;
-  [key: string]: SafeAny;
+  [key: string]: any;
 }
 
 type PoolType = Record<string, IframeItem>;
@@ -70,25 +68,21 @@ class IframeItem {
   // 注意这里的publicPath末尾一定有/，但是path首部一定没有/
   getFullPath(routeMeta: RouteMetaType) {
     const { publicPath, path } = routeMeta;
-    console.log('fullpath :>> ', `${publicPath}${path || ''}`);
     return `${publicPath}${path || ''}`;
   }
 
   // 同步修改iframe的url
   // 需要区分是第一次赋值还是后续赋值
   sync(routeMeta: RouteMetaType) {
-    console.log('sync2 :>> ', routeMeta);
     this.routeMeta = routeMeta;
     if (this.status === 'loaded') {
       // 第二次以后sync，则需要通过postBridge来调用iframe内部的replaceState方法来同步路由
-      console.log('status1 :>> ');
       this.postBridge && this.postBridge.call('replaceState', routeMeta);
     } else if (this.status === 'loading') {
       // 保存loading期间发生的sync，并且只保存最后一次
       this.loadingSyncRouteMeta = routeMeta;
     } else {
       // 第一次sync，则是直接赋值给iframe就行了ƒ
-      console.log('status2 :>> ');
       this.setStatusLoading();
       this.iframe.setAttribute('src', this.getFullPath(routeMeta));
     }
@@ -97,7 +91,6 @@ class IframeItem {
   // 在onload事件中创建postBridge
   // 在onload事件中创建iframeResizer
   onload() {
-    console.log('onload :>> ');
     this.setStatusLoaded();
     // onload之后才能创建postBridge对象
     this.postBridge = new PostBridge(this.iframe.contentWindow as Window, {
@@ -172,7 +165,6 @@ export class IframeManager {
   // 外部只会调用iframeManager.sync
   // 实际还是会调用iframeItem.sync
   sync(routeMeta: RouteMetaType) {
-    console.log('sync1 :>> ', routeMeta);
     const currentIframeItem = this.getIframeItem(routeMeta);
     currentIframeItem.sync(routeMeta);
     // 注意要先调用sync，然后才append
